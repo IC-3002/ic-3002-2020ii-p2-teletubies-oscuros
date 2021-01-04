@@ -1,5 +1,6 @@
 from dominio_ag import DominioAG
 from dominio_tsp import DominioTSP
+import random
 
 class DominioAGTSP(DominioAG, DominioTSP):
     """
@@ -74,8 +75,30 @@ class DominioAGTSP(DominioAG, DominioTSP):
         (estructura de datos) Una nueva solución producto del cruzamiento entre las soluciones A y B
         """
 
-        # Pendiente: implementar este método
-        pass
+        # IMPLEMENTACION 
+        
+        """
+        OBTENER EL PUNTO DE CRUCE:
+            se obtiene un random de 1 a len(sol)-2 para evitar puntos de cruze 
+            en los extremos de la cadena
+        """
+        puntoCruce = random.randint(1, len(sol_a)-2)
+        
+        hijo=[]
+        
+        #Elegir cual solucion va primero en el cruce
+        if(random.randint(0,1)==0):
+            for i in range(puntoCruce):
+                hijo.append(sol_a[i])
+            for i in range(puntoCruce, len(sol_a)):
+                hijo.append(sol_b[i])
+        else:
+            for i in range(puntoCruce):
+                hijo.append(sol_b[i])
+            for i in range(puntoCruce, len(sol_a)):
+                hijo.append(sol_a[i])
+                
+        return hijo
 
     def mutar(self, sol):
         """Produce una nueva solución aplicando un ligero cambio a la solución dada por
@@ -90,5 +113,17 @@ class DominioAGTSP(DominioAG, DominioTSP):
         a la solución dada por parámetro
         """
 
-        # Pendiente: implementar este método
-        pass
+        # IMPLEMENTACION
+        
+        """
+        MUTACION DE INTERCAMBIO:
+            se eligen 2 indices aleatorios y se intercambian sus valores
+        """
+        index1 = random.randint(0,len(sol))
+        index2 = random.randint(0,len(sol))
+        num1=sol[index1]
+        
+        sol[index1] = sol[index2]
+        sol[index2] = num1
+        
+        return sol
