@@ -119,8 +119,8 @@ class DominioAGTSP(DominioAG, DominioTSP):
         MUTACION DE INTERCAMBIO:
             se eligen 2 indices aleatorios y se intercambian sus valores
         """
-        index1 = random.randint(0,len(sol))
-        index2 = random.randint(0,len(sol))
+        index1 = random.randint(0,len(sol)-1)
+        index2 = random.randint(0,len(sol)-1)
         num1=sol[index1]
         
         sol[index1] = sol[index2]
