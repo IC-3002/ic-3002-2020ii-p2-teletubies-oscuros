@@ -1,3 +1,6 @@
+import random
+import math
+
 def optimizar(dominio, temperatura = 10e32, tasa_enfriamiento = 0.95):
     """Algoritmo de optimización estocástica simulated annealing.
 
@@ -18,4 +21,26 @@ def optimizar(dominio, temperatura = 10e32, tasa_enfriamiento = 0.95):
     """
 
     # Pendiente: implementar esta función
-    pass
+    initial s = 0 #corregir esta linea
+
+    current_temp = temperatura
+
+    current s = s_inicial
+
+    solucion = current_s
+
+    while temperatura > current_temp:
+        vecinoNuevo = random.choice(vecino(self,sol))
+
+        #validacion si este vecino es el mejor hasta ahora
+        dif_costo = fcosto(self.current_s) = fcosto(vecinoNuevo)
+        #si la nueva solucion es mejor, se acepta
+        if dif_costo > 0:
+            solucion = vecinoNuevo
+        else:
+            if random.uniform(0,1) < math.exp(dif_costo/current_temp):
+                solucion = vecinoNuevo
+        #bajar temperatura
+        current_temp -= tasa_enfriamiento
+
+    return solucion

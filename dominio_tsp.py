@@ -44,10 +44,7 @@ class DominioTSP(Dominio):
         Salidas:
             Una instancia de DominioTSP correctamente inicializada.
         """
-
-        # Pendiente: implementar este constructor
-        pass
-
+        Dominio.__init__(self, ciudades_rutacsv, ciudad_inicio)
     def validar(self, sol):
         """Valida que la solución dada cumple con los requisitos del problema.
 
@@ -66,6 +63,12 @@ class DominioTSP(Dominio):
         """
 
         # Pendiente: implementar este método
+        for x in sol:
+            if isinstance(x,int):
+                print("La lista solo posee numeros enteros")
+            else:
+                print("La lista posee elementos que no son numeros enteros")
+
         pass
 
     def texto(self, sol):
