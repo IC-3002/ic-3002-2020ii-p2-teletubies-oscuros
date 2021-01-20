@@ -25,18 +25,19 @@ def optimizar(dominio, tam_pobl, porc_elite, prob_mut, reps):
         aproximación a la mejor solución al problema.
     """
 
-    # Pendiente: implementar este método    FALTA LO DE LA APTITUD
+    # Implementacion
     poblacion = dominio.generar_n(tam_pobl)
     while reps > 0: 
+        aux_poblacion = []
         for solucion in poblacion: 
-            solucion.aptitud = dominio.fcosto(solucion)
-        orderarAptitud(poblacion)
+            aux_poblacion.append((solucion, dominio.fcosto(solucion)))
+        poblacion=ordenarAptitud(aux_poblacion)
         num_padres = math.floor(len(poblacion)*porc_elite)
         num_hijos = len(poblacion) - num_padres
         sig_geneneracion = poblacion[0:num_padres]
         descendencia=[]
         while num_hijos > 0:
-            padre_A = sig_geneneracion[random.randint(0,len(sig_geneneracion)-1)]
+            padre_A = sig_geneneracion[random.randint(0,len(sig_geneneracion)-1)] #tomar uno aleatorio de la poblacion ya seleccionada
             padre_B = sig_geneneracion[random.randint(0,len(sig_geneneracion)-1)]
             hijo = dominio.cuzar(padre_A,padre_B)
             if (random.randint(0,100) < prob_mut*100):
@@ -46,3 +47,11 @@ def optimizar(dominio, tam_pobl, porc_elite, prob_mut, reps):
         sig_geneneracion.append(descendencia)
         poblacion=sig_geneneracion
         reps -= 1
+    return poblacion
+    
+def ordenarAptitud(aux_poblacion):
+    poblacion=[]
+    aux_poblacion=sorted(aux_poblacion, key=lambda x: x[1])
+    for tupla in aux_poblacion:
+        poblacion.append(tupla[0])
+    return poblacion
