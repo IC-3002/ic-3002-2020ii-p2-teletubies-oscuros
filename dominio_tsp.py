@@ -44,7 +44,23 @@ class DominioTSP(Dominio):
         Salidas:
             Una instancia de DominioTSP correctamente inicializada.
         """
-        Dominio.__init__(self, ciudades_rutacsv, ciudad_inicio)
+        #Dominio.__init__(self, ciudades_rutacsv, ciudad_inicio)
+
+        #Posible solucion, arreglar luego
+        
+	resultado = []
+	with open(ciudades_rutacsv) as archivo_csv:
+		archivo_lectura = csv.reader(archivo_csv)
+		
+		for fila in archivo_lectura:
+		    resultado.append(fila[1:])
+
+	nombre_ciudades = resultado.pop(0)
+
+	self.ciudades = nombre_ciudades
+	self.posicion_ciudad_inicio = nombre_ciudades.index(ciudad_inicio)
+	self.costos = resultado
+
     def validar(self, sol):
         """Valida que la solución dada cumple con los requisitos del problema.
 
@@ -114,7 +130,20 @@ class DominioTSP(Dominio):
         """
 
         # Pendiente: implementar este método
-        pass
+        # pass
+	
+	#Posible implementacion, revisar luego
+        costo = 0
+        ciudad_actual = self.pos_ciudad_inicio
+
+        #Se recorre la solucion
+        for i in range(0, len(sol)):
+          #resultado += float(self.costos[ciudad_actual]]) #falta
+          ciudad_actual = sol[i]
+
+        #Se suma el inicio
+        resultado += float(self.costos[ciudad_actual][self.pos_ciudad_inicio])
+        return resultado
 
     def vecino(self, sol):
         """Calcula una solución vecina a partir de una solución dada.
