@@ -42,8 +42,8 @@ class DominioAGTSP(DominioAG, DominioTSP):
             Una instancia de DominioAGTSP correctamente inicializada.
         """
         
-        # Pendiente: implementar este constructor
-        pass
+        # IMPLEMENTACION
+        DominioTSP.__init__(self, ciudades_rutacsv, ciudad_inicio)
 
     def generar_n(self, n):
         """Construye aleatoriamente una lista de listas que representa n 
