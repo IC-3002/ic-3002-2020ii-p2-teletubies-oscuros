@@ -61,7 +61,7 @@ class DominioAGTSP(DominioAG, DominioTSP):
         # IMPLEMENTACION
         soluciones = []
         for i in range(n):
-            soluciones.append(super().generar())
+            soluciones.append(DominioTSP.generar(self))
         return soluciones
 
     def cruzar(self, sol_a, sol_b):
