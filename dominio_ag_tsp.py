@@ -58,8 +58,11 @@ class DominioAGTSP(DominioAG, DominioTSP):
         una posible solución al problema modelado por el objeto de dominio.
         """
         
-        # Pendiente: implementar este método
-        pass
+        # IMPLEMENTACION
+        soluciones = []
+        for i in range(n):
+            soluciones.append(super().generar())
+        return soluciones
 
     def cruzar(self, sol_a, sol_b):
         """Produce una nueva posible solución cruzando las dos soluciones dadas por parámetro.
