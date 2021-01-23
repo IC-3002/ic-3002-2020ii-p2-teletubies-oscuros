@@ -37,10 +37,12 @@ def optimizar(dominio, tam_pobl, porc_elite, prob_mut, reps):
         sig_geneneracion = poblacion[0:num_padres]
         descendencia=[]
         while num_hijos > 0:
+            aux_padres=sig_geneneracion
             padre_A = sig_geneneracion[random.randint(0,len(sig_geneneracion)-1)] #tomar uno aleatorio de la poblacion ya seleccionada
-            padre_B = sig_geneneracion[random.randint(0,len(sig_geneneracion)-1)]
+            aux_padres.pop(padre_A)
+            padre_B = aux_padres[random.randint(0,len(sig_geneneracion)-1)]
             hijo = dominio.cuzar(padre_A,padre_B)
-            if (random.randint(0,100) < prob_mut*100):
+            if (random.randint(0,100) < prob_mut*100):      #cambiar a random con dist normal
                 hijo = dominio.mutar(hijo)
             descendencia.append(hijo)
             num_hijos -= 1

@@ -93,13 +93,18 @@ class DominioAGTSP(DominioAG, DominioTSP):
         if(random.randint(0,1)==0):
             for i in range(puntoCruce):
                 hijo.append(sol_a[i])
-            for i in range(puntoCruce, len(sol_a)):
-                hijo.append(sol_b[i])
+            
+            for item in sol_b:
+                if item not in hijo:
+                    hijo.append(item)
         else:
             for i in range(puntoCruce):
                 hijo.append(sol_b[i])
-            for i in range(puntoCruce, len(sol_a)):
-                hijo.append(sol_a[i])
+            
+            for item in sol_a:
+                if item not in hijo:
+                    
+                    hijo.append(item)
                 
         return hijo
 
