@@ -1,5 +1,6 @@
 import math
 import random
+import numpy as np 
 
 def optimizar(dominio, tam_pobl, porc_elite, prob_mut, reps):
     """Algoritmo genético para optimización estocástica.
@@ -42,7 +43,7 @@ def optimizar(dominio, tam_pobl, porc_elite, prob_mut, reps):
             aux_padres.pop(padre_A)
             padre_B = aux_padres[random.randint(0,len(sig_geneneracion)-1)]
             hijo = dominio.cuzar(padre_A,padre_B)
-            if (random.randint(0,100) < prob_mut*100):      #cambiar a random con dist normal
+            if (np.random.normal(0.0, 1.0) < prob_mut):      #cambiar a random con dist normal
                 hijo = dominio.mutar(hijo)
             descendencia.append(hijo)
             num_hijos -= 1
