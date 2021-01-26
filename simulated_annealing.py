@@ -5,7 +5,7 @@ def optimizar(dominio, temperatura = 10e32, tasa_enfriamiento = 0.95):
     """Algoritmo de optimización estocástica simulated annealing.
 
     Entradas:
-    dominio (Dominio)
+    dominio (instancia de dominiotsp)
         Un objeto que modela el dominio del problema que se quiere aproximar.
 
     temperatura (float/int)
@@ -20,27 +20,49 @@ def optimizar(dominio, temperatura = 10e32, tasa_enfriamiento = 0.95):
         aproximación a la mejor solución al problema.
     """
 
-    # Pendiente: implementar esta función
-    initial s = 0 #corregir esta linea
+    # implementacion:
 
+
+    #se declara el arreglo que almacenara las ciudades
+    ciudades = []
+    #se llena el arreglo de ciudades
+    ciudades = dominio.generar()
+    #auxiliar de temperatura
     current_temp = temperatura
-
-    current s = s_inicial
-
-    solucion = current_s
-
-    while temperatura > current_temp:
-        vecinoNuevo = random.choice(vecino(self,sol))
-
+    #temperatura que define el final del algoritmo
+    final_temp = 0.1
+    #arreglo que expresaria la solucion de la funcion
+    estados = []
+    #arreglo que expresaria los costos de los estados de la funcion
+    costos = []
+    #selecciona el primer estado
+    estado = ciudades[0]
+    #se declara el costo del primer estado 
+    costoEstado = fcosto(estado)
+    #se agrega el estado al arreglo estados
+    estados.append(estado)
+    #se agrega el costo al arreglo costos
+    costos.append(costo)
+    #mientras la temperatura sea mayor que 0.1 el ciclo corre
+    while current_temp > final_temp:
+        #se declara un vecino nuevo y su costo
+        vecino = random.choice(vecino(sol))
+        costoVecino = fcosto(vecino)
         #validacion si este vecino es el mejor hasta ahora
-        dif_costo = fcosto(self.current_s) = fcosto(vecinoNuevo)
-        #si la nueva solucion es mejor, se acepta
+        dif_costo = costoEstado - costoVecino
+        #si la nueva solucion es la mejor, se acepta
         if dif_costo > 0:
-            solucion = vecinoNuevo
-        else:
-            if random.uniform(0,1) < math.exp(dif_costo/current_temp):
-                solucion = vecinoNuevo
+            estados.append(vecino)
+            costos.append(costoVecino)
+            estado = vecino
+            costoEstado = costoVecino
+        #si la nueva solucion no es la mejor igual se acepta pero con una probabilidad de e**(diferencia del costo/temperatura actual)
+        elif random.uniform(0,1) < math.exp(dif_costo/current_temp):
+            estados.append(vecino)
+            costos.append(costoVecino)
+            estado = vecino
+            costoEstado = costoVecino
         #bajar temperatura
         current_temp -= tasa_enfriamiento
 
-    return solucion
+    return estados
