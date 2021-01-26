@@ -164,5 +164,5 @@ class DominioTSP(Dominio):
         """
 
         a=random.randint(0,len(sol)-2)
-        sol[a], sol[a+1] = sol[b], sol[a]
+        sol[a], sol[a+1] = sol[a+1], sol[a]
         return sol
