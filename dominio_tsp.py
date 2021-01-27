@@ -1,6 +1,6 @@
 from dominio import Dominio
 import random
-
+import csv
 
 class DominioTSP(Dominio):
 
@@ -49,19 +49,15 @@ class DominioTSP(Dominio):
         #Dominio.__init__(self, ciudades_rutacsv, ciudad_inicio)
 
         #Posible solucion, arreglar luego
-
-    resultado = []
-    with open(ciudades_rutacsv) as archivo_csv:
-    	archivo_lectura = csv.reader(archivo_csv)
-
-    	for fila in archivo_lectura:
-    		resultado.append(fila[1:])
-
-    nombre_ciudades = resultado.pop(0)
-
-    self.ciudades = nombre_ciudades
-    self.posicion_ciudad_inicio = nombre_ciudades.index(ciudad_inicio)
-    self.costos = resultado
+        resultado = [] 
+        with open(ciudades_rutacsv) as archivo_csv:
+            archivo_lectura = csv.reader(archivo_csv) 
+            for fila in archivo_lectura:
+                resultado.append(fila[1:]) 
+        nombre_ciudades = resultado.pop(0)
+        self.ciudades = nombre_ciudades
+        self.posicion_ciudad_inicio = nombre_ciudades.index(ciudad_inicio)
+        self.costos = resultado
 
     def validar(self, sol):
         """Valida que la solución dada cumple con los requisitos del problema.
