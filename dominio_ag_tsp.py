@@ -1,5 +1,6 @@
 from dominio_ag import DominioAG
 from dominio_tsp import DominioTSP
+import random
 
 class DominioAGTSP(DominioAG, DominioTSP):
     """
@@ -41,8 +42,8 @@ class DominioAGTSP(DominioAG, DominioTSP):
             Una instancia de DominioAGTSP correctamente inicializada.
         """
         
-        # Pendiente: implementar este constructor
-        pass
+        # IMPLEMENTACION
+        DominioTSP.__init__(self, ciudades_rutacsv, ciudad_inicio)
 
     def generar_n(self, n):
         """Construye aleatoriamente una lista de listas que representa n 
@@ -57,8 +58,11 @@ class DominioAGTSP(DominioAG, DominioTSP):
         una posible solución al problema modelado por el objeto de dominio.
         """
         
-        # Pendiente: implementar este método
-        pass
+        # IMPLEMENTACION
+        soluciones = []
+        for i in range(n):
+            soluciones.append(DominioTSP.generar(self))
+        return soluciones
 
     def cruzar(self, sol_a, sol_b):
         """Produce una nueva posible solución cruzando las dos soluciones dadas por parámetro.
@@ -74,8 +78,35 @@ class DominioAGTSP(DominioAG, DominioTSP):
         (estructura de datos) Una nueva solución producto del cruzamiento entre las soluciones A y B
         """
 
-        # Pendiente: implementar este método
-        pass
+        # IMPLEMENTACION 
+        
+        """
+        OBTENER EL PUNTO DE CRUCE:
+            se obtiene un random de 1 a len(sol)-2 para evitar puntos de cruze 
+            en los extremos de la cadena
+        """
+        puntoCruce = random.randint(1, len(sol_a)-2)
+        
+        hijo=[]
+        
+        #Elegir cual solucion va primero en el cruce
+        if(random.randint(0,1)==0):
+            for i in range(puntoCruce):
+                hijo.append(sol_a[i])
+            
+            for item in sol_b:
+                if item not in hijo:
+                    hijo.append(item)
+        else:
+            for i in range(puntoCruce):
+                hijo.append(sol_b[i])
+            
+            for item in sol_a:
+                if item not in hijo:
+                    
+                    hijo.append(item)
+                
+        return hijo
 
     def mutar(self, sol):
         """Produce una nueva solución aplicando un ligero cambio a la solución dada por
@@ -90,5 +121,17 @@ class DominioAGTSP(DominioAG, DominioTSP):
         a la solución dada por parámetro
         """
 
-        # Pendiente: implementar este método
-        pass
+        # IMPLEMENTACION
+        
+        """
+        MUTACION DE INTERCAMBIO:
+            se eligen 2 indices aleatorios y se intercambian sus valores
+        """
+        index1 = random.randint(0,len(sol)-1)
+        index2 = random.randint(0,len(sol)-1)
+        num1=sol[index1]
+        
+        sol[index1] = sol[index2]
+        sol[index2] = num1
+        
+        return sol

@@ -1,7 +1,9 @@
 from dominio import Dominio
-
+import random
+import csv
 
 class DominioTSP(Dominio):
+
     """
     Esta clase modela el dominio del problema del Vendedor Viajero para su resolución
     con algoritmos probabilísticos.
@@ -44,9 +46,18 @@ class DominioTSP(Dominio):
         Salidas:
             Una instancia de DominioTSP correctamente inicializada.
         """
+        #Dominio.__init__(self, ciudades_rutacsv, ciudad_inicio)
 
-        # Pendiente: implementar este constructor
-        pass
+        #Posible solucion, arreglar luego
+        resultado = [] 
+        with open(ciudades_rutacsv) as archivo_csv:
+            archivo_lectura = csv.reader(archivo_csv) 
+            for fila in archivo_lectura:
+                resultado.append(fila[1:]) 
+        nombre_ciudades = resultado.pop(0)
+        self.ciudades = nombre_ciudades
+        self.posicion_ciudad_inicio = ciudad_inicio
+        self.costos = resultado
 
     def validar(self, sol):
         """Valida que la solución dada cumple con los requisitos del problema.
@@ -66,6 +77,12 @@ class DominioTSP(Dominio):
         """
 
         # Pendiente: implementar este método
+        for x in sol:
+            if isinstance(x,int):
+                print("La lista solo posee numeros enteros")
+            else:
+                print("La lista posee elementos que no son numeros enteros")
+
         pass
 
     def texto(self, sol):
@@ -95,9 +112,24 @@ class DominioTSP(Dominio):
         Salidas:
         (list) Una lista que representa una solución válida para esta instancia del vendedor viajero
         """
+        
 
-        # Pendiente: implementar este método
-        pass
+        datos = []
+        for element in self.ciudades:
+            datos.append(element)
+        
+        #quitar la ciudad de inicio
+        datos.pop(datos.index(self.posicion_ciudad_inicio))
+        
+        #generar aleatorio
+        sol=[]
+        rango=len(datos)
+        for i in range(rango):
+            aux=random.randint(0,len(datos)-1)
+            sol.append(aux)
+            datos.pop(aux) 
+        return sol
+        
 
     def fcosto(self, sol):
         """Calcula el costo asociado con una solución dada.
@@ -111,7 +143,19 @@ class DominioTSP(Dominio):
         """
 
         # Pendiente: implementar este método
-        pass
+        # pass
+	
+	#Posible implementacion, revisar luego
+        costo = 0
+        ciudad_actual = self.ciudades.index(self.posicion_ciudad_inicio)
+
+        #Se recorre la solucion
+        for i in sol:
+            sumar=self.costos[int(i)][int(ciudad_actual)]
+            costo=costo+float(sumar)
+            ciudad_actual = i
+          
+        return costo
 
     def vecino(self, sol):
         """Calcula una solución vecina a partir de una solución dada.
@@ -129,5 +173,6 @@ class DominioTSP(Dominio):
         (list) Solución vecina
         """
 
-        # Pendiente: implementar este método
-        pass
+        a=random.randint(0,len(sol)-2)
+        sol[a], sol[a+1] = sol[a+1], sol[a]
+        return sol
