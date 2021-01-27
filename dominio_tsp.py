@@ -126,7 +126,7 @@ class DominioTSP(Dominio):
         rango=len(datos)
         for i in range(rango):
             aux=random.randint(0,len(datos)-1)
-            sol.append(datos[aux])
+            sol.append(aux)
             datos.pop(aux) 
         return sol
         
@@ -147,11 +147,11 @@ class DominioTSP(Dominio):
 	
 	#Posible implementacion, revisar luego
         costo = 0
-        ciudad_actual = self.posicion_ciudad_inicio
+        ciudad_actual = self.ciudades.index(self.posicion_ciudad_inicio)
 
         #Se recorre la solucion
         for i in sol:
-            sumar=self.costos[self.ciudades.index(ciudad_actual)][self.ciudades.index(i)]
+            sumar=self.costos[int(i)][int(ciudad_actual)]
             costo=costo+float(sumar)
             ciudad_actual = i
           
