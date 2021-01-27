@@ -56,7 +56,7 @@ class DominioTSP(Dominio):
                 resultado.append(fila[1:]) 
         nombre_ciudades = resultado.pop(0)
         self.ciudades = nombre_ciudades
-        self.posicion_ciudad_inicio = nombre_ciudades.index(ciudad_inicio)
+        self.posicion_ciudad_inicio = ciudad_inicio
         self.costos = resultado
 
     def validar(self, sol):
@@ -112,9 +112,24 @@ class DominioTSP(Dominio):
         Salidas:
         (list) Una lista que representa una solución válida para esta instancia del vendedor viajero
         """
+        
 
-        # Pendiente: implementar este método
-        pass
+        datos = []
+        for element in self.ciudades:
+            datos.append(element)
+        
+        #quitar la ciudad de inicio
+        datos.pop(datos.index(self.posicion_ciudad_inicio))
+        
+        #generar aleatorio
+        sol=[]
+        rango=len(datos)
+        for i in range(rango):
+            aux=random.randint(0,len(datos)-1)
+            sol.append(datos[aux])
+            datos.pop(aux) 
+        return sol
+        
 
     def fcosto(self, sol):
         """Calcula el costo asociado con una solución dada.
@@ -132,16 +147,15 @@ class DominioTSP(Dominio):
 	
 	#Posible implementacion, revisar luego
         costo = 0
-        ciudad_actual = self.pos_ciudad_inicio
+        ciudad_actual = self.posicion_ciudad_inicio
 
         #Se recorre la solucion
-        for i in range(0, len(sol)):
-          #resultado += float(self.costos[ciudad_actual]]) #falta
-          ciudad_actual = sol[i]
-
-        #Se suma el inicio
-        resultado += float(self.costos[ciudad_actual][self.pos_ciudad_inicio])
-        return resultado
+        for i in sol:
+            sumar=self.costos[self.ciudades.index(ciudad_actual)][self.ciudades.index(i)]
+            costo=costo+float(sumar)
+            ciudad_actual = i
+          
+        return costo
 
     def vecino(self, sol):
         """Calcula una solución vecina a partir de una solución dada.
